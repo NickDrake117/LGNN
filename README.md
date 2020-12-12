@@ -66,9 +66,25 @@ In Serial Mode, each GNN layer is trained as a standalone GNN model, therefore b
         print('{}: \t{:.4g}'.format(i, res[i]))
 
 ### K-fold Cross Validation
+#### GNN
 To perform a 10-fold cross validation on gnn, simply run:
 
     from starter_gnn import gnn, graphs
+    from numpy import mean
+    
+    epochs = 200
+    
+    # LKO
+    lko_res = gnn.LKO(graphs, 10, epochs=epochs, serial_training=False)
+    
+    # print test result
+    for i in lko_res: 
+        for i in m: print('{}: \t{:.4f} \t{}'.format(i, mean(lko_res[i]), lko_res[i]))
+
+#### LGNN
+To perform a 10-fold cross validation on lgnn, simply run:
+
+    from starter_gnn import lgnn, graphs
     from numpy import mean
     
     epochs = 200
@@ -81,9 +97,6 @@ To perform a 10-fold cross validation on gnn, simply run:
         for i in m: print('{}: \t{:.4f} \t{}'.format(i, mean(lko_res[i]), lko_res[i]))
 
 
-
-
-
 ### TensorBoard
 To visualize learning progress, use TensorBoard --logdir command providing the log directory. Default it's `writer`.
 
@@ -93,9 +106,6 @@ To visualize learning progress, use TensorBoard --logdir command providing the l
 ### GNN implementation flow chart
 The following image details the GNN model as it is implemented in `GNN / GNN.py`.
 ![GNN Convergence Loop](GNN/GNN_flow_chart.png)
-
-
-
 
 
 ## Citing
@@ -158,24 +168,6 @@ Bibtex:
 
 ## Contributions
 Part of the code was inspired by [M. Tiezzi](http://sailab.diism.unisi.it/people/matteo-tiezzi/) and [A. Rossi](http://sailab.diism.unisi.it/people/alberto-rossi/) GNN implementation in TF 1.x ([repo](https://github.com/sailab-code/gnn)).
-
-## License
-Released under the 3-Clause BSD license (see `LICENSE.txt`):
-
-    Copyright (C) 2004-2020 Niccolò Pancino
-    Niccolò Pancino <niccolo.pancino@unifi.it>
-    Pietro Bongini <pietro.bongini@gmail.com >
-    Matteo Tiezzi <mtiezzi@diism.unisi.it>
-
-
-## Simple usage example
-
-
-Open the script `starter_lgnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and/or LGNN architecture and behaviour.
-
-In particular, set `use_MUTAG=True` to get the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
-
-
 
 ## License
 Released under the 3-Clause BSD license (see `LICENSE.txt`):
