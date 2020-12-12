@@ -1,4 +1,4 @@
-# GNN and LGNN - Graph Neural Network Models
+# GNN / LGNN - (Layered) Graph Neural Network Models
 This repo contains a Tensorflow 2.x implementations of the Graph Neural Network (GNN) and Layered Graph Neural Network (LGNN) Models.
 
 **Authors**
