@@ -1,7 +1,7 @@
 # LGNN - Layered Graph Neural Network Model - TF 2.x
 This repo contains a Tensorflow 2.x implementation of the Layered Graph Neural Network Model.
 
-- **Authors:** [Niccolò Pancino](http://sailab.diism.unisi.it/people/niccolo-pancino/)
+- **Authors:** [Niccolò Pancino](http://sailab.diism.unisi.it/people/niccolo-pancino/), [Pietro Bongini](http://sailab.diism.unisi.it/people/pietro-bongini/)
 
 ## Install
 ### Requirements
@@ -13,21 +13,17 @@ To install the requirements you can use the following command:
 
 
 ## Simple usage example
-To train and test a GNN, simply run [starter.py](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/starter.py):
+To train and test a LGNN, simply run [starter.py](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/starter.py):
 
     import starter
 
 Open the script and set parameters in section *SCRIPT OPTIONS* to change script behaviour, then run it. 
 
-By default both GNN training and GNN testing are performed.
+By default both LGNN training and LGNN testing are performed.
 
-In particular, `use_MUTAG = False` means that the GNN is trained on a dataset composed of graphs with random nodes/edges/targets.
-Set `use_MUTAG = True` to train the GNN on the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
+In particular, `use_MUTAG = False` means that the LGNN is trained on a dataset composed of graphs with random nodes/edges/targets.
+Set `use_MUTAG = True` to train the LGNN on the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
 
-
-### GNN implementation flow chart
-The following image details the GNN model as it is implemented in `GNN / GNN.py`.
-![GNN Convergence Loop](GNN/GNN_flow_chart.png)
 
 ## Citing
 To cite the GNN implementation please use the following publication:
