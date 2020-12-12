@@ -62,7 +62,7 @@ Bibtex:
     }
 
 ## Contributions
-Part of the code was inspired by [M. Tiezzi](http://sailab.diism.unisi.it/people/matteo-tiezzi/) and [A. Rossi](http://sailab.diism.unisi.it/people/alberto-rossi/) GNN implementation in TF 1.x ([repo](https://github.com/sailab-code/gnn)).
+LGNN implementation is based on the TF2.x GNN implementation [repo](https://github.com/NickDrake117/GNN_tf_2.x)
 
 ## License
 Released under the 3-Clause BSD license (see `LICENSE.txt`):
