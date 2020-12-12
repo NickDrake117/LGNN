@@ -13,42 +13,45 @@ To install the requirements you can use the following command:
 
 
 ## Simple usage example
-By default, LGNN is a 5-layered GNN for binary node-focused classification task on graphs with random nodes/edges/targets.
+In the following scripts, LGNN is by default a 5-layered GNN for binary node-focused classification task on graphs with random nodes/edges/targets.
 
-Open the script `starter_lgnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and LGNN architecture and behaviour, then run one of the following scripts. 
+Open the script `starter_lgnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and/or LGNN architecture and behaviour.
 
 In particular, set `use_MUTAG=True` to get the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
 
 ### Single model training and testing
-In the following script, both LGNN training and LGNN testing are performed. 
-
-GNN levels can be trained in parallel or in series by using `one_gnn_at_a_time` argument when calling `model.train()`. Default is `False`.
+GNN levels can be trained in parallel or in series by using `serial_training` argument when calling `model.train()`. Default is `False`.
 
 
     from starter_lgnn import lgnn, gTr, gVa, gTe
     
     epochs = 200
     
-    # training
+    # parallel training
     lgnn.train(gTr, epochs, gVa)
     
-    # test
+    # serial training: each GNN layer is trained separately, one by one
+    # lgnn.train(gTr, epochs, gVa, serial_training=True)  
+    
+    # test the lgnn
     res = lgnn.test(gTe)
 
     # print test result
     for i in metrics: 
         print('{}: \t{:.4g}'.format(i, res[i]))
 
+
 ### K-fold Cross Validation
-To perform a 10-fold cross validation, simply run:
+To perform a 10-fold cross validation in parallel mode, simply run:
 
     from starter_lgnn import lgnn, graphs
     
     epochs = 200
     
-    lko_res = lgnn.LKO(graphs, 10, epochs=epochs)
+    lko_res = lgnn.LKO(graphs, 10, epochs=epochs, serial_training=False)
     
-To visualize learning progress, use TensorBoard --logdir providing the log directory. Default it's `writer`.
+    
+To visualize learning progress, use TensorBoard --logdir command providing the log directory. Default it's `writer`.
 
     ...\projectfolder> tensorboard --logdir writer
     
