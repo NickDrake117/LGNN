@@ -54,15 +54,13 @@ To perform a 10-fold cross validation in parallel mode, simply run:
     # print test result
     for i in lko_res: 
         for i in m: print('{}: \t{:.4f} \t{}'.format(i, mean(lko_res[i]), lko_res[i]))
-    
+
+
 ### TensorBoard
 To visualize learning progress, use TensorBoard --logdir command providing the log directory. Default it's `writer`.
 
     ...\projectfolder> tensorboard --logdir writer
     
-
-
-
 
 ## Citing
 To cite the LGNN implementation please use the following publication:
