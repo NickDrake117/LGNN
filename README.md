@@ -22,7 +22,6 @@ In particular, set `use_MUTAG=True` to get the real-world dataset MUTAG for solv
 ### Single model training and testing
 GNN levels can be trained in parallel or in series by using `serial_training` argument when calling `model.train()`. Default is `False`.
 
-
     from starter_lgnn import lgnn, gTr, gVa, gTe
     
     epochs = 200
@@ -37,7 +36,7 @@ GNN levels can be trained in parallel or in series by using `serial_training` ar
     res = lgnn.test(gTe)
 
     # print test result
-    for i in metrics: 
+    for i in res: 
         print('{}: \t{:.4g}'.format(i, res[i]))
 
 
@@ -45,12 +44,18 @@ GNN levels can be trained in parallel or in series by using `serial_training` ar
 To perform a 10-fold cross validation in parallel mode, simply run:
 
     from starter_lgnn import lgnn, graphs
+    from numpy import mean
     
     epochs = 200
     
+    # LKO: as mentioned, arg serial_training affects LGNN training process
     lko_res = lgnn.LKO(graphs, 10, epochs=epochs, serial_training=False)
     
+    # print test result
+    for i in lko_res: 
+        for i in m: print('{}: \t{:.4f} \t{}'.format(i, mean(lko_res[i]), lko_res[i]))
     
+### TensorBoard
 To visualize learning progress, use TensorBoard --logdir command providing the log directory. Default it's `writer`.
 
     ...\projectfolder> tensorboard --logdir writer
