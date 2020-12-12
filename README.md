@@ -48,9 +48,6 @@ LGNN can be trained both in parallel or serial mode, by setting `serial_training
 In Parallel Mode, GNN layers are trained simultaneously, by processing loss on the LGNN output (i.e. the final GNN layer output), and backpropagating the error throughout the GNN layers.
 
 In Serial Mode, each GNN layer is trained as a standalone GNN model, therefore becoming an *expert* which solves the considered problem using the original data and the experience obtained from the previous GNN layer, so as to "correct" the errors made by the previous network, rather than solving the whole problem.
-
-the former the GNNs layers are trained simultaneously, in the second case each GNN layer is a standalone GNN which is trained separately, one by one, using the original data and the experience obtained from the gnn of the previous layer (in the form of vectors of outputs, states or both)
-
  
     from starter import lgnn, gTr, gTe, gVa
     
