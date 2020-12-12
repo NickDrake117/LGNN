@@ -1,7 +1,7 @@
 # GNN and LGNN - Graph Neural Network Models
 This repo contains a Tensorflow 2.x implementations of the Graph Neural Network (GNN) and Layered Graph Neural Network (LGNN) Models.
 
-**Authors** 
+**Authors**
 - **GNN:** [Niccolò Pancino](http://sailab.diism.unisi.it/people/niccolo-pancino/), [Pietro Bongini](http://sailab.diism.unisi.it/people/pietro-bongini/)
 - **LGNN:** [Niccolò Pancino](http://sailab.diism.unisi.it/people/niccolo-pancino/)
 
@@ -16,29 +16,55 @@ To install the requirements you can use the following command:
 
 
 ## Simple usage example
-In the following scripts, GNN is trained by default to solve a binary node-focused classification task on graphs with random nodes/edges/targets.
+In the following scripts, gnn is a GNN trained by default to solve a binary node-focused classification task on graphs with random nodes/edges/targets, while lgnn is a 5-layered GNN.
 
-Open the script `starter_gnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and/or GNN architecture and learning behaviour.
+Open the script `starter_gnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and/or GNN/LGNN models architectures and learning behaviour.
 
 In particular, set `use_MUTAG=True` to get the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
 
+Note that a single layered LGNN behaves exaclty like a GNN, as it is composed of a single GNN.
+
 ### Single model training and testing
+#### GNN
 
-
-    from starter_gnn import gnn, gTr, gTe, gVa
+    from starter import gnn, gTr, gTe, gVa
     
     epochs = 200
     
     # training
     gnn.train(gTr, epochs, gVa)
     
-    # test the lgnn
+    # test the gnn
     res = gnn.test(gTe)
 
     # print test result
     for i in res:  
         print('{}: \t{:.4g}'.format(i, res[i]))
 
+
+#### LGNN
+LGNN can be trained both in parallel or serial mode, by setting `serial_training` argument when calling `LGNN.train()`. Default is `False`.
+
+in Serial Mode, each GNN layer is trained as a standalone model, therefore becoming an *expert* which solves the considered problem using the original data and the experience obtained from the previous GNN layer, so as to "correct" the errors made by the previous network, rather than solving the whole problem.
+
+the former the GNNs layers are trained simultaneously, in the second case each GNN layer is a standalone GNN which is trained separately, one by one, using the original data and the experience obtained from the gnn of the previous layer (in the form of vectors of outputs, states or both)
+
+ 
+    from starter import lgnn, gTr, gTe, gVa
+    
+    epochs = 200
+    
+    # training in parallel mode
+    gnn.train(gTr, epochs, gVa)
+    
+    # training in serial mode
+    # gnn.train(gTr, epochs, gVa, serial_training=True)
+    # test the lgnn
+    res = gnn.test(gTe)
+
+    # print test result
+    for i in res:  
+        print('{}: \t{:.4g}'.format(i, res[i]))
 
 ### K-fold Cross Validation
 To perform a 10-fold cross validation on gnn, simply run:
@@ -56,6 +82,9 @@ To perform a 10-fold cross validation on gnn, simply run:
         for i in m: print('{}: \t{:.4f} \t{}'.format(i, mean(lko_res[i]), lko_res[i]))
 
 
+
+
+
 ### TensorBoard
 To visualize learning progress, use TensorBoard --logdir command providing the log directory. Default it's `writer`.
 
@@ -65,6 +94,9 @@ To visualize learning progress, use TensorBoard --logdir command providing the l
 ### GNN implementation flow chart
 The following image details the GNN model as it is implemented in `GNN / GNN.py`.
 ![GNN Convergence Loop](GNN/GNN_flow_chart.png)
+
+
+
 
 
 ## Citing
@@ -138,7 +170,7 @@ Released under the 3-Clause BSD license (see `LICENSE.txt`):
 
 
 ## Simple usage example
-In the following scripts, LGNN is by default a 5-layered GNN for binary node-focused classification task on graphs with random nodes/edges/targets.
+
 
 Open the script `starter_lgnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and/or LGNN architecture and behaviour.
 
