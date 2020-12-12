@@ -1,7 +1,8 @@
 # GNN - Graph Neural Network Model - TF 2.x
 This repo contains a Tensorflow 2.x implementation of the Graph Neural Network Model.
 
-- **Authors:** [Niccolò Pancino](http://sailab.diism.unisi.it/people/niccolo-pancino/), [Pietro Bongini](http://sailab.diism.unisi.it/people/pietro-bongini/)
+- **GNN Authors:** [Niccolò Pancino](http://sailab.diism.unisi.it/people/niccolo-pancino/), [Pietro Bongini](http://sailab.diism.unisi.it/people/pietro-bongini/)
+- **LGNN Authors:** Niccolò Pancino
 
 ## Install
 ### Requirements
