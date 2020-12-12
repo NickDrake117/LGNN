@@ -60,7 +60,7 @@ To visualize learning progress, use TensorBoard --logdir command providing the l
 
 
 ## Citing
-To cite the GNN implementation please use the following publication:
+To cite the LGNN implementation please use the following publication:
 
     Pancino, N., Rossi, A., Ciano, G., Giacomini, G., Bonechi, S., Andreini, P., Scarselli, F., Bianchini, M., Bongini, P. (2020),
     "Graph Neural Networks for the Prediction of Protein–Protein Interfaces",
@@ -78,7 +78,7 @@ Bibtex:
 
 ---------
 
-To cite GNN please use the following publication:
+To cite LGNN please use the following publication:
 
     N. Bandinelli, M. Bianchini and F. Scarselli, 
     "Learning long-term dependencies using layered graph neural networks", 
@@ -98,7 +98,7 @@ Bibtex:
     }
 
 ## Contributions
-LGNN implementation is based on the TF2.x GNN implementation [repo](https://github.com/NickDrake117/GNN_tf_2.x)
+LGNN implementation is based on the TF2.x GNN model implementation [repo](https://github.com/NickDrake117/GNN_tf_2.x)
 
 ## License
 Released under the 3-Clause BSD license (see `LICENSE.txt`):
