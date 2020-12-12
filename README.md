@@ -17,10 +17,13 @@ By default, LGNN is a 5-layered GNN for binary node-focused classification task 
 
 Open the script `starter_lgnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and LGNN architecture and behaviour, then run one of the following scripts. 
 
-In particular, set `use_MUTAG = True` to get the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
+In particular, set `use_MUTAG=True` to get the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
 
 ### Single model training and testing
 In the following script, both LGNN training and LGNN testing are performed. 
+
+GNN levels can be trained in parallel or in series by using `one_gnn_at_a_time` argument when calling `model.train()`. Default is `False`.
+
 
     from starter_lgnn import lgnn, gTr, gVa, gTe
     
