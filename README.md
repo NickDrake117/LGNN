@@ -13,16 +13,44 @@ To install the requirements you can use the following command:
 
 
 ## Simple usage example
-To train and test a LGNN, simply run [starter.py](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/starter.py):
+By default, LGNN is a 5-layered GNN for binary node-focused classification task on graphs with random nodes/edges/targets.
 
-    import starter
+Open the script `starter_lgnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and LGNN architecture and behaviour, then run one of the following scripts. 
 
-Open the script and set parameters in section *SCRIPT OPTIONS* to change script behaviour, then run it. 
+In particular, set `use_MUTAG = True` to get the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
 
-By default both LGNN training and LGNN testing are performed.
+### Single model training and testing
+In the following script, both LGNN training and LGNN testing are performed. 
 
-In particular, `use_MUTAG = False` means that the LGNN is trained on a dataset composed of graphs with random nodes/edges/targets.
-Set `use_MUTAG = True` to train the LGNN on the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
+    from starter_lgnn import lgnn, gTr, gVa, gTe
+    
+    epochs = 200
+    
+    # training
+    lgnn.train(gTr, epochs, gVa)
+    
+    # test
+    res = lgnn.test(gTe)
+
+    # print test result
+    for i in metrics: 
+        print('{}: \t{:.4g}'.format(i, res[i]))
+
+### K-fold Cross Validation
+To perform a 10-fold cross validation, simply run:
+
+    from starter_lgnn import lgnn, graphs
+    
+    epochs = 200
+    
+    lko_res = lgnn.LKO(graphs, 10, epochs=epochs)
+    
+To visualize learning progress, use TensorBoard --logdir providing the log directory. Default it's `writer`.
+
+    ...\projectfolder> tensorboard --logdir writer
+    
+
+
 
 
 ## Citing
@@ -46,19 +74,21 @@ Bibtex:
 
 To cite GNN please use the following publication:
 
-    F. Scarselli, M. Gori,  A. C. Tsoi, M. Hagenbuchner, G. Monfardini, 
-    "The Graph Neural Network Model", IEEE Transactions on Neural Networks,
-    vol. 20(1); p. 61-80, 2009.
+    N. Bandinelli, M. Bianchini and F. Scarselli, 
+    "Learning long-term dependencies using layered graph neural networks", 
+    The 2010 International Joint Conference on Neural Networks (IJCNN), 
+    Barcelona, 2010, pp. 1-8, doi: 10.1109/IJCNN.2010.5596634.
     
 Bibtex:
 
-    @article{Scarselli2009TheGN,
-      title={The Graph Neural Network Model},
-      author={Franco Scarselli, Marco Gori, Ah Chung Tsoi, Markus Hagenbuchner, Gabriele Monfardini},
-      journal={IEEE Transactions on Neural Networks},
-      year={2009},
-      volume={20},
-      pages={61-80}
+    @inproceedings{Scarselli2010LGNN,
+      title={Learning long-term dependencies using layered graph neural networks}, 
+      author={N. {Bandinelli} and M. {Bianchini} and F. {Scarselli}},
+      booktitle={The 2010 International Joint Conference on Neural Networks (IJCNN)}, 
+      year={2010},
+      volume={},
+      pages={1-8},
+      doi={10.1109/IJCNN.2010.5596634}
     }
 
 ## Contributions
