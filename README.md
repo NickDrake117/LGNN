@@ -89,7 +89,7 @@ Bibtex:
 
     @inproceedings{Scarselli2010LGNN,
       title={Learning long-term dependencies using layered graph neural networks}, 
-      author={N. {Bandinelli} and M. {Bianchini} and F. {Scarselli}},
+      author={Niccolò Bandinelli, Monica Bianchini, Franco Scarselli},
       booktitle={The 2010 International Joint Conference on Neural Networks (IJCNN)}, 
       year={2010},
       volume={},
