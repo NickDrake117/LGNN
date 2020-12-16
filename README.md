@@ -1,9 +1,9 @@
-# GNN / LGNN - (Layered) Graph Neural Network Models
-This repo contains a Tensorflow 2.x implementations of the Graph Neural Network (GNN) and Layered Graph Neural Network (LGNN) Models.
+# GNN & LGNN - (Layered) Graph Neural Network Models
+This repo contains Tensorflow 2.x implementations of the Graph Neural Network (GNN) and Layered Graph Neural Network (LGNN) Models.
 
 **Authors**
 - **GNN:** [Niccolò Pancino](http://sailab.diism.unisi.it/people/niccolo-pancino/), [Pietro Bongini](http://sailab.diism.unisi.it/people/pietro-bongini/)
-- **LGNN:** [Niccolò Pancino](http://sailab.diism.unisi.it/people/niccolo-pancino/)
+- **LGNN:** Niccolò Pancino
 
 
 ## Install
@@ -14,101 +14,94 @@ To install the requirements you can use the following command:
 
     pip install -U -r requirements.txt
 
+### Install from folder
+Download this folder and open a terminal in its location, then use the following command:
+    
+    python setup.py install
 
-## Simple usage example
+## Simple usage examples
 In the following scripts, gnn is a GNN trained by default to solve a binary node-focused classification task on graphs with random nodes/edges/targets, while lgnn is a 5-layered GNN.
 
-Open the script `starter_gnn` and set parameters in section *SCRIPT OPTIONS* to change dataset and/or GNN/LGNN models architectures and learning behaviour.
+Open the script `starter` and set parameters in section *SCRIPT OPTIONS* to change dataset and/or GNN/LGNN models architectures and learning behaviour.
 
 In particular, set `use_MUTAG=True` to get the real-world dataset MUTAG for solving a graph-based problem ([details](https://github.com/NickDrake117/GNN_tf_2.x/blob/main/MUTAG_raw/Mutagenicity_label_readme.txt))
 
 Note that a single layered LGNN behaves exaclty like a GNN, as it is composed of a single GNN.
 
 ### Single model training and testing
-#### GNN
-
-    from starter import gnn, gTr, gTe, gVa
-    
-    epochs = 200
-    
-    # training
-    gnn.train(gTr, epochs, gVa)
-    
-    # test the gnn
-    res = gnn.test(gTe)
-
-    # print test result
-    for i in res:  
-        print('{}: \t{:.4g}'.format(i, res[i]))
-
-
-#### LGNN
 LGNN can be trained both in parallel or serial mode, by setting `serial_training` argument when calling `LGNN.train()`. Default is `False`.
 
-In Parallel Mode, GNN layers are trained simultaneously, by processing loss on the LGNN output (i.e. the final GNN layer output), and backpropagating the error throughout the GNN layers.
+In *Parallel Mode*, GNN layers are trained simultaneously, by processing loss on the LGNN output (as the mean of the GNNs outputs), and backpropagating the error throughout the GNN layers.
 
-In Serial Mode, each GNN layer is trained as a standalone GNN model, therefore becoming an *expert* which solves the considered problem using the original data and the experience obtained from the previous GNN layer, so as to "correct" the errors made by the previous network, rather than solving the whole problem.
- 
-    from starter import lgnn, gTr, gTe, gVa
+In *Serial Mode*, each GNN layer is trained as a standalone GNN model, therefore becoming an *expert* which solves the considered problem using the original data and the experience obtained from the previous GNN layer, so as to "correct" the errors made by the previous network, rather than solving the whole problem.
+
+To perform models training and testing, run:
+
+    from starter import gnn, lgnn, gTr, gTe, gVa
     
     epochs = 200
     
-    # training in parallel mode
+    # GNN training
     gnn.train(gTr, epochs, gVa)
     
-    # training in serial mode
-    # gnn.train(gTr, epochs, gVa, serial_training=True)
-    # test the lgnn
+    # GNN test
     res = gnn.test(gTe)
+    
+    
+    # LGNN training in parallel mode
+    # lgnn.train(gTr, epochs, gVa)
+    
+    # LGNN training in serial mode
+    # lgnn.train(gTr, epochs, gVa, serial_training=True)
+    
+    # LGNN test
+    # res = lgnn.test(gTe)
+    
 
     # print test result
     for i in res:  
         print('{}: \t{:.4g}'.format(i, res[i]))
 
-### K-fold Cross Validation
-#### GNN
+***NOTE** uncomment lgnn lines to train and test lgnn model*
+
+
+### K-fold cross validation
 To perform a 10-fold cross validation on gnn, simply run:
 
-    from starter_gnn import gnn, graphs
+    from starter import gnn, lgnn, graphs
     from numpy import mean
     
     epochs = 200
     
-    # LKO
+    # GNN LKO
     lko_res = gnn.LKO(graphs, 10, epochs=epochs, serial_training=False)
     
+    
+    # LGNN LKO: as mentioned, arg serial_training affects LGNN learning process
+    # lko_res = lgnn.LKO(graphs, 10, epochs=epochs)
+    # lko_res = lgnn.LKO(graphs, 10, epochs=epochs, serial_training=False)
+    
+
     # print test result
     for i in lko_res: 
         for i in m: print('{}: \t{:.4f} \t{}'.format(i, mean(lko_res[i]), lko_res[i]))
 
-#### LGNN
-To perform a 10-fold cross validation on lgnn, simply run:
-
-    from starter_gnn import lgnn, graphs
-    from numpy import mean
-    
-    epochs = 200
-    
-    # LKO: as mentioned, arg serial_training affects LGNN training process
-    lko_res = gnn.LKO(graphs, 10, epochs=epochs, serial_training=False)
-    
-    # print test result
-    for i in lko_res: 
-        for i in m: print('{}: \t{:.4f} \t{}'.format(i, mean(lko_res[i]), lko_res[i]))
+***NOTE** uncomment lgnn lines to perform 10-fold cross validation on lgnn model*
 
 
 ### TensorBoard
 To visualize learning progress, use TensorBoard --logdir command providing the log directory. Default it's `writer`.
 
     ...\projectfolder> tensorboard --logdir writer
-   
-   
-### GNN implementation flow chart
-The following image details the GNN model as it is implemented in `GNN / GNN.py`.
-![GNN Convergence Loop](GNN/GNN_flow_chart.png)
+    
 
+### GNN implementation flow chart
+The following image details the GNN model as it is implemented in `GNN/GNN.py`.
+![GNN Convergence Loop](GNN/GNN_flow_chart.png)
+   
 
 ## Citing
+### Implementation
 To cite the GNN/LGNN implementations please use the following publication:
 
     Pancino, N., Rossi, A., Ciano, G., Giacomini, G., Bonechi, S., Andreini, P., Scarselli, F., Bianchini, M., Bongini, P. (2020),
@@ -127,6 +120,7 @@ Bibtex:
 
 
 ---------
+### GNN original paper
 To cite GNN please use the following publication:
 
     F. Scarselli, M. Gori,  A. C. Tsoi, M. Hagenbuchner, G. Monfardini, 
@@ -146,6 +140,7 @@ Bibtex:
 
 
 ---------
+### LGNN original paper
 To cite LGNN please use the following publication:
 
     N. Bandinelli, M. Bianchini and F. Scarselli, 
@@ -168,6 +163,7 @@ Bibtex:
 
 ## Contributions
 Part of the code was inspired by [M. Tiezzi](http://sailab.diism.unisi.it/people/matteo-tiezzi/) and [A. Rossi](http://sailab.diism.unisi.it/people/alberto-rossi/) GNN implementation in TF 1.x ([repo](https://github.com/sailab-code/gnn)).
+
 
 ## License
 Released under the 3-Clause BSD license (see `LICENSE.txt`):
